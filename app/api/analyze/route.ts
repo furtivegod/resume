@@ -72,11 +72,24 @@ Please provide ONLY the updated resume in the following JSON format (return ONLY
 
 Important: 
 - The "skills" field must be an object where keys are skill categories (like "Programming Languages", "AI/ML & Frameworks", etc.) and values are arrays of skills for that category
+- CRITICAL: Keep the original "location" from the existing resume exactly as it is. Do NOT change the location based on the job description. The location represents where the candidate currently lives, not where the job is located.
+- Keep the original "name", "email", "phone", and "linkedin" from the existing resume exactly as they are. Do NOT modify these contact details.
 - Use keywords from the job description
 - Highlight relevant experience and skills that match the job
 - Maintain accuracy to the original resume while optimizing for the role
 - Include all sections that exist in the original resume
 - Format dates consistently (MM/YYYY)
+
+Experience Writing Guidelines:
+- CRITICAL: Every bullet point (achievement) must use a UNIQUE action verb. Do NOT repeat the same action verb across different bullet points in the same experience entry. Use varied action verbs like: Architected, Built, Developed, Engineered, Implemented, Optimized, Created, Designed, Led, Mentored, Collaborated, Integrated, Deployed, etc.
+- Bullet point count per experience entry (CRITICAL):
+  * For the MOST RECENT company (last in the experience array): Include exactly 6 bullet points (achievements)
+  * For the MIDDLE company (if there are 3+ companies): Include 5 or 6 bullet points (achievements)
+  * For the FIRST/OLDEST company (first in the experience array): Include exactly 4 bullet points (achievements)
+  * Ideal pattern: 6-5-4 or 6-6-4 bullets from most recent to oldest
+- For the MOST RECENT company (last in the experience array): Write achievements that reflect SENIOR-LEVEL responsibilities. Use action verbs and language that demonstrate leadership, architecture, strategic thinking, mentoring, and advanced technical expertise. Examples: "Architected...", "Led...", "Mentored...", "Designed enterprise-scale...", "Engineered complex...", etc.
+- For the MIDDLE company (if there are 3+ companies): Write achievements that reflect MID-TO-SENIOR level responsibilities. Show progression from junior to more independent work, some leadership elements, and growing technical depth. Examples: "Developed...", "Built...", "Implemented...", "Collaborated on...", etc.
+- For the FIRST/OLDEST company (first in the experience array): Write achievements that reflect BEGINNER-TO-MID level responsibilities. Use action verbs appropriate for entry/junior roles, showing learning, assistance, and foundational work. Examples: "Assisted with...", "Contributed to...", "Supported...", "Learned...", "Participated in...", "Helped develop...", etc.
 
 
 Return ONLY valid JSON, no additional text, no markdown formatting, no code blocks.`;
