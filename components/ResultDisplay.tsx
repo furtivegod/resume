@@ -27,14 +27,54 @@ export default function ResultDisplay({ result }: ResultDisplayProps) {
       const { ResumePDFDocument } = await import("./ResumePDF");
 
       const blob = await pdf(<ResumePDFDocument resume={result} />).toBlob();
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `${result.name || "resume"}.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
+      const fileName = `${result.name || "resume"}.pdf`;
+
+      // Try to use File System Access API for choosing save location
+      if ("showSaveFilePicker" in window) {
+        try {
+          const fileHandle = await (window as any).showSaveFilePicker({
+            suggestedName: fileName,
+            types: [
+              {
+                description: "PDF files",
+                accept: { "application/pdf": [".pdf"] },
+              },
+            ],
+          });
+
+          const writable = await fileHandle.createWritable();
+          await writable.write(blob);
+          await writable.close();
+          alert(`PDF saved successfully to your chosen location!`);
+        } catch (saveError: any) {
+          // User cancelled the file picker, or API failed - fallback to default download
+          if (saveError.name !== "AbortError") {
+            console.warn(
+              "File System Access API failed, using fallback:",
+              saveError
+            );
+          }
+          // Fallback to default download
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = fileName;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(url);
+        }
+      } else {
+        // Fallback for browsers that don't support File System Access API
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      }
     } catch (error) {
       console.error("Error generating PDF:", error);
       const errorMessage =
