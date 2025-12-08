@@ -7,10 +7,8 @@ import ResultDisplay from "@/components/ResultDisplay";
 export interface ResumeExperience {
   title: string;
   company: string;
-  location?: string;
   startDate: string;
   endDate: string;
-  description?: string;
   achievements?: string[];
 }
 
@@ -36,20 +34,13 @@ export interface UpdatedResume {
   linkedin?: string;
   summary?: string;
   experience?: ResumeExperience[];
-  skills?: string[];
+  skills?: Record<string, string[]>;
   education?: ResumeEducation[];
   certifications?: string[];
   projects?: ResumeProject[];
 }
 
-export interface AnalysisResult {
-  summary?: string;
-  experience?: string;
-  skills?: string[];
-  education?: string;
-  recommendations?: string;
-  updatedResume?: UpdatedResume;
-}
+export type AnalysisResult = UpdatedResume;
 
 export default function Home() {
   const [result, setResult] = useState<AnalysisResult | null>(null);
@@ -75,7 +66,7 @@ export default function Home() {
         throw new Error(errorData.error || "Failed to analyze resume");
       }
 
-      const data = await response.json();
+      const data: UpdatedResume = await response.json();
       setResult(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
@@ -90,12 +81,12 @@ export default function Home() {
         <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">
           Resume Analyzer
         </h1>
-        
+
         <div className="grid md:grid-cols-2 gap-8">
           <div className="bg-white rounded-lg shadow-lg p-6">
             <ResumeForm onSubmit={handleSubmit} loading={loading} />
           </div>
-          
+
           <div className="bg-white rounded-lg shadow-lg p-6">
             {error && (
               <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
@@ -110,7 +101,7 @@ export default function Home() {
             {result && <ResultDisplay result={result} />}
             {!result && !loading && !error && (
               <div className="text-center text-gray-500 h-64 flex items-center justify-center">
-                <p>Your analysis results will appear here</p>
+                <p>Your resume JSON will appear here</p>
               </div>
             )}
           </div>
@@ -119,4 +110,3 @@ export default function Home() {
     </main>
   );
 }
-
