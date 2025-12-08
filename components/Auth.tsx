@@ -8,49 +8,26 @@ interface AuthProps {
 }
 
 export default function Auth({ onAuthSuccess }: AuthProps) {
-  const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [message, setMessage] = useState<string | null>(null);
 
-  const handleAuth = async (e: React.FormEvent) => {
+  const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    setMessage(null);
 
     try {
-      if (isLogin) {
-        // Sign in
-        const { data, error } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-        if (error) throw error;
-        
-        if (data.user) {
-          onAuthSuccess();
-        }
-      } else {
-        // Sign up
-        const { data, error } = await supabase.auth.signUp({
-          email,
-          password,
-        });
-
-        if (error) throw error;
-
-        if (data.user) {
-          setMessage("Account created! Please check your email to verify your account.");
-          // Auto switch to login after signup
-          setTimeout(() => {
-            setIsLogin(true);
-            setMessage(null);
-          }, 3000);
-        }
+      if (error) throw error;
+      
+      if (data.user) {
+        onAuthSuccess();
       }
     } catch (err: any) {
       setError(err.message || "An error occurred");
@@ -66,19 +43,13 @@ export default function Auth({ onAuthSuccess }: AuthProps) {
           Resume Analyzer
         </h1>
         <p className="text-center text-gray-600 mb-8">
-          {isLogin ? "Sign in to continue" : "Create an account"}
+          Sign in to continue
         </p>
 
-        <form onSubmit={handleAuth} className="space-y-4">
+        <form onSubmit={handleSignIn} className="space-y-4">
           {error && (
             <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
               <p className="text-red-800 text-sm">{error}</p>
-            </div>
-          )}
-
-          {message && (
-            <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
-              <p className="text-green-800 text-sm">{message}</p>
             </div>
           )}
 
@@ -107,7 +78,6 @@ export default function Auth({ onAuthSuccess }: AuthProps) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              minLength={6}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               placeholder="••••••••"
             />
@@ -118,25 +88,9 @@ export default function Auth({ onAuthSuccess }: AuthProps) {
             disabled={loading}
             className="w-full bg-indigo-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
-            {loading ? "Loading..." : isLogin ? "Sign In" : "Sign Up"}
+            {loading ? "Signing in..." : "Sign In"}
           </button>
         </form>
-
-        <div className="mt-6 text-center">
-          <button
-            type="button"
-            onClick={() => {
-              setIsLogin(!isLogin);
-              setError(null);
-              setMessage(null);
-            }}
-            className="text-sm text-indigo-600 hover:text-indigo-700"
-          >
-            {isLogin
-              ? "Don't have an account? Sign up"
-              : "Already have an account? Sign in"}
-          </button>
-        </div>
       </div>
     </div>
   );
