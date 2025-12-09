@@ -81,15 +81,16 @@ Important:
 - Format dates consistently (MM/YYYY)
 
 Experience Writing Guidelines:
+- CRITICAL: The "experience" array MUST be ordered from LATEST (most recent) to OLDEST. The first item in the array should be the most recent job, and the last item should be the oldest job. Always sort by endDate (or startDate if endDate is "Present") in descending order.
 - CRITICAL: Every bullet point (achievement) must use a UNIQUE action verb. Do NOT repeat the same action verb across different bullet points in the same experience entry. Use varied action verbs like: Architected, Built, Developed, Engineered, Implemented, Optimized, Created, Designed, Led, Mentored, Collaborated, Integrated, Deployed, etc.
 - Bullet point count per experience entry (CRITICAL):
-  * For the MOST RECENT company (last in the experience array): Include exactly 6 bullet points (achievements)
+  * For the MOST RECENT company (first in the experience array): Include exactly 6 bullet points (achievements)
   * For the MIDDLE company (if there are 3+ companies): Include 5 or 6 bullet points (achievements)
-  * For the FIRST/OLDEST company (first in the experience array): Include exactly 4 bullet points (achievements)
+  * For the OLDEST company (last in the experience array): Include exactly 4 bullet points (achievements)
   * Ideal pattern: 6-5-4 or 6-6-4 bullets from most recent to oldest
-- For the MOST RECENT company (last in the experience array): Write achievements that reflect SENIOR-LEVEL responsibilities. Use action verbs and language that demonstrate leadership, architecture, strategic thinking, mentoring, and advanced technical expertise. Examples: "Architected...", "Led...", "Mentored...", "Designed enterprise-scale...", "Engineered complex...", etc.
+- For the MOST RECENT company (first in the experience array): Write achievements that reflect SENIOR-LEVEL responsibilities. Use action verbs and language that demonstrate leadership, architecture, strategic thinking, mentoring, and advanced technical expertise. Examples: "Architected...", "Led...", "Mentored...", "Designed enterprise-scale...", "Engineered complex...", etc.
 - For the MIDDLE company (if there are 3+ companies): Write achievements that reflect MID-TO-SENIOR level responsibilities. Show progression from junior to more independent work, some leadership elements, and growing technical depth. Examples: "Developed...", "Built...", "Implemented...", "Collaborated on...", etc.
-- For the FIRST/OLDEST company (first in the experience array): Write achievements that reflect BEGINNER-TO-MID level responsibilities. Use action verbs appropriate for entry/junior roles, showing learning, assistance, and foundational work. Examples: "Assisted with...", "Contributed to...", "Supported...", "Learned...", "Participated in...", "Helped develop...", etc.
+- For the OLDEST company (last in the experience array): Write achievements that reflect BEGINNER-TO-MID level responsibilities. Use action verbs appropriate for entry/junior roles, showing learning, assistance, and foundational work. Examples: "Assisted with...", "Contributed to...", "Supported...", "Learned...", "Participated in...", "Helped develop...", etc.
 
 
 Return ONLY valid JSON, no additional text, no markdown formatting, no code blocks.`;
@@ -137,11 +138,36 @@ Return ONLY valid JSON, no additional text, no markdown formatting, no code bloc
     // Return only the resume JSON (remove any analysis fields if present)
     const resumeData = analysisResult.updatedResume || analysisResult;
 
-    // Remove location and description from experience if present
+    // Remove location and description from experience if present, and ensure correct order
     if (resumeData.experience && Array.isArray(resumeData.experience)) {
       resumeData.experience = resumeData.experience.map((exp: any) => {
         const { location, description, ...rest } = exp;
         return rest;
+      });
+
+      // Sort experience from latest (most recent) to oldest
+      resumeData.experience.sort((a: any, b: any) => {
+        // Parse dates (MM/YYYY format)
+        const parseDate = (dateStr: string) => {
+          if (dateStr === "Present" || dateStr === "present") {
+            return new Date(9999, 11, 31); // Far future date for "Present"
+          }
+          const [month, year] = dateStr.split("/");
+          return new Date(parseInt(year), parseInt(month) - 1);
+        };
+
+        // Compare by endDate first (most recent endDate comes first)
+        const aEndDate = parseDate(a.endDate || a.startDate);
+        const bEndDate = parseDate(b.endDate || b.startDate);
+        
+        if (aEndDate.getTime() !== bEndDate.getTime()) {
+          return bEndDate.getTime() - aEndDate.getTime(); // Descending order
+        }
+        
+        // If endDates are equal, sort by startDate (more recent startDate comes first)
+        const aStartDate = parseDate(a.startDate);
+        const bStartDate = parseDate(b.startDate);
+        return bStartDate.getTime() - aStartDate.getTime(); // Descending order
       });
     }
 
