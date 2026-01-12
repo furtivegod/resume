@@ -1,6 +1,6 @@
-# Resume Analyzer
+# Resume Generator
 
-A Next.js application that analyzes your resume against job descriptions using Anthropic's Claude API.
+A Next.js application that generates optimized resumes tailored to job descriptions using Anthropic's Claude API.
 
 ## Features
 
@@ -29,10 +29,12 @@ npm run dev
 
 ## Usage
 
-1. Enter the Job Description in the left panel
-2. Enter your Personal Information (experience, skills, education, etc.) in the left panel
-3. Click "Analyze Resume" to get AI-powered analysis
-4. View the structured results in the right panel
+1. Configure your default resume information in Settings
+2. Enter the Job Description in the left panel
+3. Your saved resume content will be pre-filled automatically
+4. Select a resume template
+5. Click "Analyze Resume" to generate an optimized resume
+6. Download the generated PDF resume
 
 ## Project Structure
 
@@ -47,4 +49,7 @@ npm run dev
 - TypeScript
 - Tailwind CSS
 - Anthropic Claude API
+- Supabase (Authentication & Database)
+- PDFShift API (PDF Generation)
+- Mustache (Template Engine)
 

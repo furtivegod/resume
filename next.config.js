@@ -7,13 +7,6 @@ const nextConfig = {
         canvas: false,
       };
     }
-    // Handle @react-pdf/renderer
-    config.resolve.fallback = {
-      ...config.resolve.fallback,
-      fs: false,
-      path: false,
-      crypto: false,
-    };
     return config;
   },
 };

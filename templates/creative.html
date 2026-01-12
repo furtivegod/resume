@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Source Sans Pro', sans-serif;
+      font-size: 10.5pt;
+      line-height: 1.6;
+      color: #2d3748;
+      padding: 0;
+      background: #ffffff;
+    }
+    .container {
+      max-width: 210mm;
+      margin: 0 auto;
+      background: white;
+      border: 1px solid #e2e8f0;
+    }
+    .header {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      color: white;
+      padding: 10mm 10mm;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 300px;
+      height: 300px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+    }
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: -50px;
+      left: -50px;
+      width: 200px;
+      height: 200px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 50%;
+    }
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 40pt;
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    .contact-info {
+      font-size: 10pt;
+      text-align: right;
+      line-height: 1.9;
+      font-weight: 500;
+    }
+    .contact-info a {
+      color: white;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.4);
+      transition: border-color 0.2s;
+    }
+    .content {
+      padding: 10mm 10mm;
+    }
+    .section {
+      margin-top: 24px;
+      margin-bottom: 20px;
+    }
+    .section-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13pt;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #4f46e5;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding-left: 12px;
+      border-left: 4px solid #4f46e5;
+      position: relative;
+    }
+    .summary {
+      font-size: 11pt;
+      line-height: 1.7;
+      color: #374151;
+      background: #f8fafc;
+      padding: 16px 18px;
+      border-left: 4px solid #4f46e5;
+      border-radius: 4px;
+      font-weight: 400;
+    }
+    .experience-item {
+      margin-bottom: 24px;
+      padding: 18px;
+      background: #f8fafc;
+      border-left: 4px solid #4f46e5;
+      border-radius: 6px;
+      transition: box-shadow 0.2s;
+    }
+    .experience-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+    .job-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13pt;
+      font-weight: 700;
+      color: #4f46e5;
+      margin-bottom: 5px;
+      letter-spacing: 0.3px;
+    }
+    .company {
+      font-size: 11pt;
+      color: #2d3748;
+      font-weight: 600;
+    }
+    .date-range {
+      font-size: 9.5pt;
+      color: #64748b;
+      background: white;
+      padding: 5px 12px;
+      border-radius: 15px;
+      font-weight: 600;
+      border: 1.5px solid #e2e8f0;
+      white-space: nowrap;
+    }
+    .achievements {
+      margin-top: 12px;
+    }
+    .achievement-item {
+      margin-bottom: 8px;
+      padding-left: 20px;
+      position: relative;
+      font-size: 10.5pt;
+      color: #374151;
+      line-height: 1.7;
+      font-weight: 400;
+    }
+    .achievement-item::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: #4f46e5;
+      font-size: 8pt;
+      font-weight: bold;
+    }
+    .skill-category {
+      margin-bottom: 18px;
+      padding: 14px;
+      background: #f8fafc;
+      border-left: 4px solid #4f46e5;
+      border-radius: 6px;
+    }
+    .skill-category-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11pt;
+      font-weight: 700;
+      color: #4f46e5;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    .skill-tag {
+      font-size: 9.5pt;
+      color: #4f46e5;
+      background: white;
+      padding: 6px 14px;
+      border: 2px solid #4f46e5;
+      border-radius: 20px;
+      display: inline-block;
+      margin-right: 8px;
+      margin-bottom: 8px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .education-item {
+      margin-bottom: 18px;
+      padding: 16px;
+      background: #f8fafc;
+      border-left: 4px solid #4f46e5;
+      border-radius: 6px;
+    }
+    .education-degree {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12pt;
+      font-weight: 700;
+      color: #4f46e5;
+      margin-bottom: 5px;
+    }
+    .education-school {
+      font-size: 10.5pt;
+      color: #2d3748;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+    .education-date {
+      font-size: 9.5pt;
+      color: #64748b;
+      font-weight: 500;
+    }
+    .certification-item {
+      font-size: 10.5pt;
+      color: #374151;
+      margin-bottom: 10px;
+      padding-left: 22px;
+      position: relative;
+      font-weight: 500;
+    }
+    .certification-item::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #10b981;
+      font-weight: bold;
+      font-size: 12pt;
+      background: #d1fae5;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11pt;
+    }
+    .project-item {
+      margin-bottom: 20px;
+      padding: 16px;
+      background: #f8fafc;
+      border-left: 4px solid #4f46e5;
+      border-radius: 6px;
+    }
+    .project-name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12.5pt;
+      font-weight: 700;
+      color: #4f46e5;
+      margin-bottom: 8px;
+    }
+    .project-description {
+      font-size: 10.5pt;
+      color: #374151;
+      margin-bottom: 6px;
+      line-height: 1.7;
+      font-weight: 400;
+    }
+    .project-tech {
+      font-size: 9.5pt;
+      color: #64748b;
+      font-weight: 600;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="header-content">
+        <div class="name">{{name}}</div>
+        <div class="contact-info">
+          {{#email}}<div>{{email}}</div>{{/email}}
+          {{#phone}}<div>{{phone}}</div>{{/phone}}
+          {{#location}}<div>{{location}}</div>{{/location}}
+          {{#linkedin}}<div><a href="{{linkedin}}">LinkedIn</a></div>{{/linkedin}}
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+      {{#hasSummary}}
+      <div class="section">
+        <div class="section-title">Professional Summary</div>
+        <div class="summary">{{summary}}</div>
+      </div>
+      {{/hasSummary}}
+
+      {{#hasExperience}}
+      <div class="section">
+        <div class="section-title">Professional Experience</div>
+        {{#experience}}
+        <div class="experience-item">
+          <div class="experience-header">
+            <div>
+              <div class="job-title">{{title}}</div>
+              <div class="company">{{company}}</div>
+            </div>
+            <div class="date-range">{{startDate}} - {{endDate}}</div>
+          </div>
+          {{#achievements}}
+          <div class="achievements">
+            {{#.}}
+            <div class="achievement-item">{{.}}</div>
+            {{/.}}
+          </div>
+          {{/achievements}}
+        </div>
+        {{/experience}}
+      </div>
+      {{/hasExperience}}
+
+      {{#hasHardSkills}}
+      <div class="section">
+        <div class="section-title">Hard Skills</div>
+        {{#hardSkills}}
+        <div class="skill-category">
+          <div class="skill-category-title">{{key}}</div>
+          <div>
+            {{#value}}
+            <span class="skill-tag">{{.}}</span>
+            {{/value}}
+          </div>
+        </div>
+        {{/hardSkills}}
+      </div>
+      {{/hasHardSkills}}
+
+      {{#hasSoftSkills}}
+      <div class="section">
+        <div class="section-title">Soft Skills</div>
+        <div>
+          {{#softSkills}}
+          <span class="skill-tag">{{.}}</span>
+          {{/softSkills}}
+        </div>
+      </div>
+      {{/hasSoftSkills}}
+
+      {{#hasEducation}}
+      <div class="section">
+        <div class="section-title">Education</div>
+        {{#education}}
+        <div class="education-item">
+          <div class="education-degree">{{degree}}</div>
+          <div class="education-school">{{school}}</div>
+          <div class="education-date">{{graduationDate}}</div>
+          {{#gpa}}<div class="education-date">GPA: {{gpa}}</div>{{/gpa}}
+        </div>
+        {{/education}}
+      </div>
+      {{/hasEducation}}
+
+      {{#hasCertifications}}
+      <div class="section">
+        <div class="section-title">Certifications</div>
+        {{#certifications}}
+        <div class="certification-item">{{.}}</div>
+        {{/certifications}}
+      </div>
+      {{/hasCertifications}}
+
+      {{#hasProjects}}
+      <div class="section">
+        <div class="section-title">Projects</div>
+        {{#projects}}
+        <div class="project-item">
+          <div class="project-name">{{name}}</div>
+          {{#description}}<div class="project-description">{{description}}</div>{{/description}}
+          {{#technologiesString}}
+          <div class="project-tech">{{technologiesString}}</div>
+          {{/technologiesString}}
+          {{^technologiesString}}
+          {{#technologies}}
+          <div class="project-tech">{{#technologies}}{{.}}{{^last}}, {{/last}}{{/technologies}}</div>
+          {{/technologies}}
+          {{/technologiesString}}
+        </div>
+        {{/projects}}
+      </div>
+      {{/hasProjects}}
+    </div>
+  </div>
+</body>
+</html>

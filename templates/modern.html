@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      font-size: 9pt;
+      line-height: 1.5;
+      color: #1e293b;
+      padding: 0;
+      background: #f8fafc;
+    }
+    .container {
+      max-width: 210mm;
+      margin: 0 auto;
+      background: white;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+      min-height: 297mm;
+    }
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 8mm 10mm;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 300px;
+      height: 300px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+    }
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -5%;
+      width: 200px;
+      height: 200px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 50%;
+    }
+    .name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 32pt;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      position: relative;
+      z-index: 1;
+    }
+    .contact-info {
+      font-size: 8.5pt;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      opacity: 0.95;
+      font-weight: 400;
+      position: relative;
+      z-index: 1;
+    }
+    .contact-info a {
+      color: white;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+      transition: border-color 0.2s;
+    }
+    .content {
+      padding: 8mm 10mm;
+    }
+    .section {
+      margin-top: 18px;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12pt;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #667eea;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding-bottom: 6px;
+      border-bottom: 2.5px solid #667eea;
+      position: relative;
+    }
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+    }
+    .summary {
+      font-size: 9pt;
+      line-height: 1.5;
+      color: #475569;
+      font-weight: 400;
+    }
+    .experience-item {
+      margin-bottom: 16px;
+      padding-left: 16px;
+      border-left: 3px solid #667eea;
+      padding-bottom: 14px;
+      position: relative;
+    }
+    .experience-item::before {
+      content: '';
+      position: absolute;
+      left: -6px;
+      top: 0;
+      width: 10px;
+      height: 10px;
+      background: #667eea;
+      border-radius: 50%;
+      border: 2px solid white;
+      box-shadow: 0 0 0 1.5px #667eea;
+    }
+    .experience-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+    .job-title {
+      font-size: 11pt;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 4px;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .company {
+      font-size: 9.5pt;
+      color: #667eea;
+      font-weight: 600;
+    }
+    .date-range {
+      font-size: 8.5pt;
+      color: #94a3b8;
+      background: #f1f5f9;
+      padding: 4px 10px;
+      border-radius: 15px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .achievements {
+      margin-top: 8px;
+    }
+    .achievement-item {
+      margin-bottom: 5px;
+      padding-left: 18px;
+      position: relative;
+      font-size: 9pt;
+      color: #475569;
+      line-height: 1.5;
+    }
+    .achievement-item::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: #667eea;
+      font-weight: bold;
+      font-size: 12pt;
+    }
+    .skill-category {
+      margin-bottom: 5px;
+    }
+    .skill-category-title {
+      font-size: 8pt;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 3px;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .skill-tag {
+      font-size: 7pt;
+      color: white;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 2px 6px;
+      border-radius: 10px;
+      display: inline-block;
+      margin-right: 3px;
+      margin-bottom: 3px;
+      font-weight: 500;
+      box-shadow: 0 1px 2px rgba(102, 126, 234, 0.3);
+    }
+    .education-item {
+      margin-bottom: 6px;
+      padding-left: 10px;
+      border-left: 1.5px solid #e2e8f0;
+    }
+    .education-degree {
+      font-size: 8.5pt;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 2px;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .education-school {
+      font-size: 8pt;
+      color: #667eea;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .education-date {
+      font-size: 7.5pt;
+      color: #94a3b8;
+      font-weight: 500;
+    }
+    .certification-item {
+      font-size: 8pt;
+      color: #475569;
+      margin-bottom: 3px;
+      padding-left: 14px;
+      position: relative;
+      font-weight: 500;
+    }
+    .certification-item::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #10b981;
+      font-weight: bold;
+      font-size: 8pt;
+      background: #d1fae5;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 7.5pt;
+    }
+    .project-item {
+      margin-bottom: 6px;
+      padding: 6px 8px;
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      border-radius: 4px;
+      border-left: 2px solid #667eea;
+    }
+    .project-name {
+      font-size: 8.5pt;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 3px;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .project-description {
+      font-size: 8pt;
+      color: #475569;
+      margin-bottom: 2px;
+      line-height: 1.25;
+    }
+    .project-tech {
+      font-size: 7.5pt;
+      color: #667eea;
+      font-weight: 500;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="name">{{name}}</div>
+      <div class="contact-info">
+        {{#email}}<span>{{email}}</span>{{/email}}
+        {{#phone}}<span>{{phone}}</span>{{/phone}}
+        {{#location}}<span>{{location}}</span>{{/location}}
+        {{#linkedin}}<span><a href="{{linkedin}}">LinkedIn</a></span>{{/linkedin}}
+      </div>
+    </div>
+
+    <div class="content">
+      {{#hasSummary}}
+      <div class="section">
+        <div class="section-title">Professional Summary</div>
+        <div class="summary">{{summary}}</div>
+      </div>
+      {{/hasSummary}}
+
+      {{#hasExperience}}
+      <div class="section">
+        <div class="section-title">Professional Experience</div>
+        {{#experience}}
+        <div class="experience-item">
+          <div class="experience-header">
+            <div>
+              <div class="job-title">{{title}}</div>
+              <div class="company">{{company}}</div>
+            </div>
+            <div class="date-range">{{startDate}} - {{endDate}}</div>
+          </div>
+          {{#achievements}}
+          <div class="achievements">
+            {{#.}}
+            <div class="achievement-item">{{.}}</div>
+            {{/.}}
+          </div>
+          {{/achievements}}
+        </div>
+        {{/experience}}
+      </div>
+      {{/hasExperience}}
+
+      {{#hasHardSkills}}
+      <div class="section">
+        <div class="section-title">Hard Skills</div>
+        {{#hardSkills}}
+        <div class="skill-category">
+          <div class="skill-category-title">{{key}}</div>
+          <div>
+            {{#value}}
+            <span class="skill-tag">{{.}}</span>
+            {{/value}}
+          </div>
+        </div>
+        {{/hardSkills}}
+      </div>
+      {{/hasHardSkills}}
+
+      {{#hasSoftSkills}}
+      <div class="section">
+        <div class="section-title">Soft Skills</div>
+        <div>
+          {{#softSkills}}
+          <span class="skill-tag">{{.}}</span>
+          {{/softSkills}}
+        </div>
+      </div>
+      {{/hasSoftSkills}}
+
+      {{#hasEducation}}
+      <div class="section">
+        <div class="section-title">Education</div>
+        {{#education}}
+        <div class="education-item">
+          <div class="education-degree">{{degree}}</div>
+          <div class="education-school">{{school}}</div>
+          <div class="education-date">{{graduationDate}}</div>
+          {{#gpa}}<div class="education-date">GPA: {{gpa}}</div>{{/gpa}}
+        </div>
+        {{/education}}
+      </div>
+      {{/hasEducation}}
+
+      {{#hasCertifications}}
+      <div class="section">
+        <div class="section-title">Certifications</div>
+        {{#certifications}}
+        <div class="certification-item">{{.}}</div>
+        {{/certifications}}
+      </div>
+      {{/hasCertifications}}
+
+      {{#hasProjects}}
+      <div class="section">
+        <div class="section-title">Projects</div>
+        {{#projects}}
+        <div class="project-item">
+          <div class="project-name">{{name}}</div>
+          {{#description}}<div class="project-description">{{description}}</div>{{/description}}
+          {{#technologiesString}}
+          <div class="project-tech">{{technologiesString}}</div>
+          {{/technologiesString}}
+          {{^technologiesString}}
+          {{#technologies}}
+          <div class="project-tech">{{#technologies}}{{.}}{{^last}}, {{/last}}{{/technologies}}</div>
+          {{/technologies}}
+          {{/technologiesString}}
+        </div>
+        {{/projects}}
+      </div>
+      {{/hasProjects}}
+    </div>
+  </div>
+</body>
+</html>

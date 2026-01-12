@@ -3,8 +3,8 @@ import "./globals.css";
 import { AuthProvider } from "@/components/AuthProvider";
 
 export const metadata: Metadata = {
-  title: "Resume Analyzer",
-  description: "Analyze your resume with AI",
+  title: "Resume Generator",
+  description: "Generate optimized resumes tailored to job descriptions with AI",
 };
 
 export default function RootLayout({
