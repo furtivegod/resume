@@ -202,7 +202,7 @@ export default function Home() {
                 Your Resume
               </h2>
               <p className="text-gray-600">
-                Download your optimized resume once it's generated
+                Download your optimized resume once it&apos;s generated
               </p>
             </div>
 
@@ -268,7 +268,7 @@ export default function Home() {
                   Ready to Generate
                 </h3>
                 <p className="text-gray-600 max-w-sm">
-                  Fill out the form on the left and click "Generate Resume" to
+                  Fill out the form on the left and click &quot;Generate Resume&quot; to
                   create your optimized resume
                 </p>
               </div>
